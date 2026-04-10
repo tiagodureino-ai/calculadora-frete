@@ -75,8 +75,8 @@ function calcular() {
     const kmLiquido = fatLiquido / km;
     const kmSaldo = kmLiquido - (subtotalOpKm + deprecKm);
 
-    document.getElementById('refKmBruto').textContent = 'R$ ' + kmBruto.toFixed(4);
-    document.getElementById('refKmLiquido').textContent = 'R$ ' + kmLiquido.toFixed(4);
+    document.getElementById('refKmBruto').textContent = 'R$ ' + kmBruto.toFixed(4).replace('.', ',');
+    document.getElementById('refKmLiquido').textContent = 'R$ ' + kmLiquido.toFixed(4).replace('.', ',');
 
     document.getElementById('refMinOp').textContent = formatBRL(minOp) + '/ton';
     document.getElementById('refMinTotal').textContent = formatBRL(minTotal) + '/ton';
