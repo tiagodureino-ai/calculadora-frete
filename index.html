@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light only">
+    <meta name="supported-color-schemes" content="light only">
+    <title>Calculadora de Frete por Tonelada</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Calculadora de Frete</h1>
+            <p class="subtitle">Simulação de viabilidade — R$/tonelada por KM rodado</p>
+            <button class="btn-config" onclick="toggleConfig()" title="Configurações">&#9881;</button>
+        </header>
+
+        <!-- PAINEL DE CONFIGURAÇÕES (oculto por padrão) -->
+        <section class="panel config-panel hidden" id="configPanel">
+            <div class="config-header">
+                <h2>Configurações</h2>
+                <button class="btn-close" onclick="toggleConfig()">&times;</button>
+            </div>
+            <div class="config-grid">
+                <div class="param-group">
+                    <h3>Custos Operacionais (R$/KM)</h3>
+                    <div class="param-row">
+                        <label for="custoCombustiveis">Combustíveis</label>
+                        <input type="number" id="custoCombustiveis" value="2.6757" step="0.0001">
+                    </div>
+                    <div class="param-row">
+                        <label for="custoPneus">Pneus</label>
+                        <input type="number" id="custoPneus" value="0.2002" step="0.0001">
+                    </div>
+                    <div class="param-row">
+                        <label for="custoManutencao">Manutenção</label>
+                        <input type="number" id="custoManutencao" value="0.7630" step="0.0001">
+                    </div>
+                    <div class="param-row">
+                        <label for="custoMotorista">Motorista</label>
+                        <input type="number" id="custoMotorista" value="1.2837" step="0.0001">
+                    </div>
+                    <div class="param-row">
+                        <label for="custoOutros">Outros</label>
+                        <input type="number" id="custoOutros" value="0.2762" step="0.0001">
+                    </div>
+                    <div class="param-row total-row">
+                        <label>Subtotal Operacional</label>
+                        <span id="subtotalOp" class="calc-value">5.1988</span>
+                    </div>
+                    <div class="param-row">
+                        <label for="custoDepreciacao">Depreciação</label>
+                        <input type="number" id="custoDepreciacao" value="2.1341" step="0.0001">
+                    </div>
+                    <div class="param-row total-row highlight-total">
+                        <label>Custo Total R$/KM</label>
+                        <span id="custoTotalKm" class="calc-value">7.3329</span>
+                    </div>
+                </div>
+
+                <div class="param-group">
+                    <h3>Impostos sobre Frete</h3>
+                    <div class="param-row">
+                        <label for="icms">ICMS (%)</label>
+                        <input type="number" id="icms" value="12" step="0.01">
+                    </div>
+                    <div class="param-row">
+                        <label for="pis">PIS (%)</label>
+                        <input type="number" id="pis" value="0.41" step="0.01">
+                    </div>
+                    <div class="param-row">
+                        <label for="cofins">COFINS (%)</label>
+                        <input type="number" id="cofins" value="1.90" step="0.01">
+                    </div>
+                    <div class="param-row total-row">
+                        <label>Total Impostos</label>
+                        <span id="totalImpostos" class="calc-value">14.31%</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- CALCULADORA -->
+        <section class="panel calc-panel">
+            <h2>Simulação da Rota</h2>
+
+            <div class="route-inputs">
+                <div class="input-row three-cols">
+                    <div class="input-group">
+                        <label for="km">KM da Rota</label>
+                        <input type="number" id="km" placeholder="0" min="1" step="1">
+                    </div>
+                    <div class="input-group">
+                        <label for="oferta">R$/TON Ofertado</label>
+                        <input type="number" id="oferta" placeholder="0.00" min="0" step="1">
+                    </div>
+                    <div class="input-group">
+                        <label for="toneladas">Carga Carregada (ton)</label>
+                        <input type="number" id="toneladas" value="48" step="1" min="1">
+                    </div>
+                </div>
+                <button id="btnCalcular" onclick="calcular()">Calcular Viabilidade</button>
+            </div>
+
+            <!-- Resultado -->
+            <div id="resultado" class="resultado hidden">
+                <h3>Resultado da Análise</h3>
+
+                <div class="result-cards">
+                    <div class="result-card">
+                        <span class="card-label">Faturamento Bruto</span>
+                        <span class="card-value" id="resFatBruto">—</span>
+                    </div>
+                    <div class="result-card">
+                        <span class="card-label">Impostos</span>
+                        <span class="card-value negative" id="resImpostos">—</span>
+                    </div>
+                    <div class="result-card">
+                        <span class="card-label">Faturamento Líquido</span>
+                        <span class="card-value" id="resFatLiquido">—</span>
+                    </div>
+                    <div class="result-card">
+                        <span class="card-label">Custo Operacional</span>
+                        <span class="card-value negative" id="resCustoOp">—</span>
+                    </div>
+                    <div class="result-card highlight-card" id="cardSaldo">
+                        <span class="card-label">Saldo (Líq. - Custo Op.)</span>
+                        <span class="card-value" id="resSaldo">—</span>
+                    </div>
+                    <div class="result-card" id="cardCobertura">
+                        <span class="card-label">% Depreciação Coberta</span>
+                        <span class="card-value" id="resCobertura">—</span>
+                    </div>
+                </div>
+
+                <div class="verdict-box" id="verdictBox">
+                    <span id="verdictIcon"></span>
+                    <span id="verdictText"></span>
+                </div>
+
+                <div class="reference-box">
+                    <h4>R$/KM pelo Preço Ofertado</h4>
+                    <div class="ref-row">
+                        <span>R$/KM Bruto (faturamento / KM)</span>
+                        <strong id="refKmBruto">—</strong>
+                    </div>
+                    <div class="ref-row">
+                        <span>R$/KM Líquido (s/ impostos / KM)</span>
+                        <strong id="refKmLiquido">—</strong>
+                    </div>
+                </div>
+
+                <div class="reference-box" style="margin-top: 12px;">
+                    <h4>Valores Mínimos de Referência</h4>
+                    <div class="ref-row">
+                        <span>R$/TON mínimo (cobrir custo operacional)</span>
+                        <strong id="refMinOp">—</strong>
+                    </div>
+                    <div class="ref-row">
+                        <span>R$/TON mínimo (cobrir custo total + deprec.)</span>
+                        <strong id="refMinTotal">—</strong>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>Uso interno — Dados base: Março/2025 | KM Rodado: 626.020</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
