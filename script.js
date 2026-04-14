@@ -46,8 +46,10 @@ function calcular() {
         getVal('custoManutencao') + getVal('custoMotorista') + getVal('custoOutros');
     const deprecKm = getVal('custoDepreciacao');
 
-    // Taxa de impostos
-    const taxaImpostos = (getVal('icms') + getVal('pis') + getVal('cofins')) / 100;
+    // Taxa de impostos (exportação = isento de ICMS)
+    const isExportacao = document.getElementById('exportacao').checked;
+    const icms = isExportacao ? 0 : getVal('icms');
+    const taxaImpostos = (icms + getVal('pis') + getVal('cofins')) / 100;
 
     // Cálculos
     const fatBruto = oferta * tons;
