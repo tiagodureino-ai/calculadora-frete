@@ -199,6 +199,17 @@ function comparar() {
     document.getElementById('compEconomiaCom').style.color = economiaCom > 0 ? '#16a34a' : '#dc2626';
     document.getElementById('compEconomiaSem').style.color = economiaSem > 0 ? '#16a34a' : '#dc2626';
 
+    // Cobertura de depreciação (cenário 2)
+    const deprecTotal = c2KmTotal * deprecKm;
+    const economiaOp = c1SemDeprec - c2LiqSem; // quanto o frete externo economiza no operacional
+    const pctDeprec = deprecTotal !== 0 ? (economiaOp / deprecTotal) : 0;
+
+    document.getElementById('compDeprecTotal').textContent = formatBRL(deprecTotal);
+    document.getElementById('compSaldoParaDeprec').textContent = formatBRL(economiaOp);
+    document.getElementById('compSaldoParaDeprec').style.color = economiaOp >= 0 ? '#16a34a' : '#dc2626';
+    document.getElementById('compDeprecPct').textContent = (pctDeprec * 100).toFixed(1) + '%';
+    document.getElementById('compDeprecPct').style.color = pctDeprec >= 1 ? '#16a34a' : pctDeprec >= 0 ? '#d97706' : '#dc2626';
+
     // Veredicto
     const box = document.getElementById('compVerdictBox');
     const icon = document.getElementById('compVerdictIcon');
