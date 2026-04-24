@@ -46,10 +46,16 @@ function calcular() {
         getVal('custoManutencao') + getVal('custoMotorista') + getVal('custoOutros');
     const deprecKm = getVal('custoDepreciacao');
 
-    // Taxa de impostos (exportação = isento de ICMS)
+    // Taxa de impostos
     const isExportacao = document.getElementById('exportacao').checked;
-    const icms = isExportacao ? 0 : getVal('icms');
-    const taxaImpostos = (icms + getVal('pis') + getVal('cofins')) / 100;
+    const isFreteInterno = document.getElementById('freteInterno').checked;
+    let taxaImpostos = 0;
+    if (isFreteInterno) {
+        taxaImpostos = 0;
+    } else {
+        const icms = isExportacao ? 0 : getVal('icms');
+        taxaImpostos = (icms + getVal('pis') + getVal('cofins')) / 100;
+    }
 
     // Cálculos
     const fatBruto = oferta * tons;
@@ -126,6 +132,14 @@ document.querySelectorAll('.calc-panel input').forEach(input => {
     input.addEventListener('keydown', e => {
         if (e.key === 'Enter') calcular();
     });
+});
+
+// Toggles mutuamente exclusivos
+document.getElementById('exportacao').addEventListener('change', function() {
+    if (this.checked) document.getElementById('freteInterno').checked = false;
+});
+document.getElementById('freteInterno').addEventListener('change', function() {
+    if (this.checked) document.getElementById('exportacao').checked = false;
 });
 
 atualizarTotais();
