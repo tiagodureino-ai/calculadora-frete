@@ -193,36 +193,42 @@
 
             <div class="route-inputs">
                 <div class="comp-section">
-                    <div class="input-row three-cols">
+                    <h3 class="comp-title">Rota Interna (Cenário 1)</h3>
+                    <div class="input-row">
                         <div class="input-group">
-                            <label for="compKmInterno">KM Interno</label>
-                            <input type="number" id="compKmInterno" placeholder="Ex: 662" min="0" step="1">
+                            <label for="compKmIda">KM Ida</label>
+                            <input type="number" id="compKmIda" placeholder="Ex: 660" min="0" step="1">
                         </div>
                         <div class="input-group">
-                            <label for="compKmExterno">KM Externo</label>
+                            <label for="compKmVolta">KM Volta</label>
+                            <input type="number" id="compKmVolta" placeholder="Ex: 662" min="0" step="1">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="comp-section">
+                    <h3 class="comp-title">Frete Externo (Cenário 2)</h3>
+                    <div class="input-row three-cols">
+                        <div class="input-group">
+                            <label for="compKmExterno">KM Total Externo</label>
                             <input type="number" id="compKmExterno" placeholder="Ex: 1446" min="0" step="1">
                         </div>
                         <div class="input-group">
                             <label for="compOferta">R$/TON Ofertado</label>
                             <input type="number" id="compOferta" placeholder="Ex: 170" min="0" step="1">
                         </div>
-                    </div>
-                </div>
-
-                <div class="comp-section">
-                    <div class="input-row">
                         <div class="input-group">
                             <label for="compToneladas">Carga Carregada (ton)</label>
                             <input type="number" id="compToneladas" value="48" step="1" min="1">
                         </div>
-                        <div class="input-group">
-                            <label class="toggle-label" style="margin-top: 20px;">
-                                <input type="checkbox" id="compExportacao">
-                                <span class="toggle-switch"></span>
-                                <span>Exportação (isento ICMS)</span>
-                            </label>
-                        </div>
                     </div>
+
+                <div class="checkbox-row">
+                    <label class="toggle-label">
+                        <input type="checkbox" id="compExportacao">
+                        <span class="toggle-switch"></span>
+                        <span>Exportação (isento ICMS)</span>
+                    </label>
                 </div>
 
                 <button id="btnComparar" onclick="comparar()">Comparar Cenários</button>

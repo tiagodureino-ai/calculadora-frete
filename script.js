@@ -133,13 +133,14 @@ function trocarAba(aba) {
 
 // Comparar cenários
 function comparar() {
-    const kmInterno = getVal('compKmInterno');
+    const kmIda = getVal('compKmIda');
+    const kmVolta = getVal('compKmVolta');
     const kmExterno = getVal('compKmExterno');
     const oferta = getVal('compOferta');
     const tons = getVal('compToneladas');
 
-    if (!kmInterno || kmInterno <= 0) {
-        alert('Informe o KM Interno.');
+    if (!kmIda && !kmVolta) {
+        alert('Informe o KM Ida e Volta.');
         return;
     }
 
@@ -149,14 +150,14 @@ function comparar() {
     const deprecKm = getVal('custoDepreciacao');
     const custoComDepKm = subtotalOpKm + deprecKm;
 
-    // Cenário 1: só interno (ida vazio + volta carregado, ida ≈ volta)
-    const c1KmTotal = kmInterno * 2;
+    // Cenário 1: só interno (ida vazio + volta carregado)
+    const c1KmTotal = kmIda + kmVolta;
     const c1ComDeprec = c1KmTotal * custoComDepKm;
     const c1SemDeprec = c1KmTotal * subtotalOpKm;
 
-    // Cenário 2: externo + interno
+    // Cenário 2: externo (já inclui ida) + volta interna
     const c2KmExtTotal = kmExterno;
-    const c2KmIntTotal = kmInterno;
+    const c2KmIntTotal = kmVolta;
     const c2KmTotal = c2KmExtTotal + c2KmIntTotal;
     const c2ComDeprec = c2KmTotal * custoComDepKm;
     const c2SemDeprec = c2KmTotal * subtotalOpKm;
