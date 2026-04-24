@@ -157,9 +157,11 @@ function comparar() {
     const c1SemDeprec = c1KmTotal * subtotalOpKm;
 
     // Cenário 2: externo + interno
+    // Ida para a carga faz parte da rota externa, só a volta é interna
     const kmExterno = kmExternoIda + kmExternoVolta;
-    const kmInterno = kmInternoIda + kmInternoVolta;
-    const c2KmTotal = kmExterno + kmInterno;
+    const c2KmExtTotal = kmExterno + kmInternoIda; // externo + ida até a carga
+    const c2KmIntTotal = kmInternoVolta; // só a volta é interna
+    const c2KmTotal = c2KmExtTotal + c2KmIntTotal;
     const c2ComDeprec = c2KmTotal * custoComDepKm;
     const c2SemDeprec = c2KmTotal * subtotalOpKm;
 
@@ -182,8 +184,8 @@ function comparar() {
     document.getElementById('c1CustoTonSem').textContent = formatBRL(c1SemDeprec / tons) + '/ton';
 
     // Preencher Cenário 2
-    document.getElementById('c2KmExterno').textContent = kmExterno.toLocaleString('pt-BR');
-    document.getElementById('c2KmInterno').textContent = kmInterno.toLocaleString('pt-BR');
+    document.getElementById('c2KmExterno').textContent = c2KmExtTotal.toLocaleString('pt-BR');
+    document.getElementById('c2KmInterno').textContent = c2KmIntTotal.toLocaleString('pt-BR');
     document.getElementById('c2KmTotal').textContent = c2KmTotal.toLocaleString('pt-BR');
     document.getElementById('c2Receita').textContent = formatBRL(receitaLiquida);
     document.getElementById('c2CustoComDeprec').textContent = formatBRL(c2ComDeprec);
