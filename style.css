@@ -194,6 +194,39 @@ header h1 {
     border-radius: 6px;
 }
 
+/* Abas */
+.tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: -1px;
+    position: relative;
+    z-index: 1;
+}
+
+.tab {
+    padding: 10px 20px;
+    background: #e5e7eb;
+    border: 1px solid #d1d5db;
+    border-bottom: none;
+    border-radius: 8px 8px 0 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: #6b7280;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.tab:hover {
+    background: #f3f4f6;
+}
+
+.tab.active {
+    background: #fff;
+    color: #1e40af;
+    border-color: #d1d5db;
+    border-bottom: 1px solid #fff;
+}
+
 /* Calculadora */
 .calc-panel h2 {
     margin-bottom: 20px;
@@ -441,6 +474,125 @@ header h1 {
 .ref-row strong {
     font-size: 16px;
     color: #1e40af;
+}
+
+/* Comparativo */
+.comp-section {
+    margin-bottom: 8px;
+}
+
+.comp-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #1e40af;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid #dbeafe;
+}
+
+.comp-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.comp-card {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 16px;
+}
+
+.comp-card-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-bottom: 2px;
+}
+
+.comp-card-desc {
+    font-size: 12px;
+    color: #9ca3af;
+    margin-bottom: 12px;
+}
+
+.comp-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.comp-line:last-child {
+    border-bottom: none;
+}
+
+.comp-line span {
+    font-size: 13px;
+    color: #475569;
+}
+
+.comp-line strong {
+    font-size: 14px;
+    color: #1a1a2e;
+}
+
+.comp-line .text-green {
+    color: #16a34a;
+}
+
+.highlight-comp {
+    background: #eff6ff;
+    margin: 0 -8px;
+    padding: 8px;
+    border-radius: 6px;
+}
+
+.highlight-comp strong {
+    color: #1e40af;
+    font-size: 15px;
+}
+
+#btnComparar {
+    margin-top: 8px;
+    padding: 12px;
+    background: #1e40af;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    width: 100%;
+}
+
+#btnComparar:hover {
+    background: #1e3a8a;
+}
+
+@media (max-width: 700px) {
+    .tabs {
+        flex-direction: column;
+        gap: 0;
+    }
+    .tab {
+        border-radius: 0;
+        border-bottom: 1px solid #d1d5db;
+    }
+    .tab:first-child {
+        border-radius: 8px 8px 0 0;
+    }
+    .tab.active {
+        border-bottom: 1px solid #d1d5db;
+    }
+    .comp-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 footer {

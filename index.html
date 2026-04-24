@@ -82,8 +82,14 @@
             </div>
         </section>
 
+        <!-- ABAS -->
+        <div class="tabs">
+            <button class="tab active" onclick="trocarAba('simulacao')">Simulação da Rota</button>
+            <button class="tab" onclick="trocarAba('comparativo')">Comparativo Interno x Externo</button>
+        </div>
+
         <!-- CALCULADORA -->
-        <section class="panel calc-panel">
+        <section class="panel calc-panel" id="abaSimulacao">
             <h2>Simulação da Rota</h2>
 
             <div class="route-inputs">
@@ -175,6 +181,150 @@
                     <div class="ref-row">
                         <span>R$/TON mínimo (cobrir custo total + deprec.)</span>
                         <strong id="refMinTotal">—</strong>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- COMPARATIVO -->
+        <section class="panel calc-panel hidden" id="abaComparativo">
+            <h2>Comparativo: Interno x Externo</h2>
+            <p class="panel-note">Compare o custo de ir vazio vs. fazer um frete externo no caminho</p>
+
+            <div class="route-inputs">
+                <div class="comp-section">
+                    <h3 class="comp-title">Rota Interna (puxada de carga)</h3>
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="compKmInternoIda">KM Ida (origem → carga)</label>
+                            <input type="number" id="compKmInternoIda" placeholder="0" min="0" step="1">
+                        </div>
+                        <div class="input-group">
+                            <label for="compKmInternoVolta">KM Volta (carga → base)</label>
+                            <input type="number" id="compKmInternoVolta" placeholder="0" min="0" step="1">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="comp-section">
+                    <h3 class="comp-title">Frete Externo (receita no caminho)</h3>
+                    <div class="input-row three-cols">
+                        <div class="input-group">
+                            <label for="compKmExternoIda">KM Ida Externo</label>
+                            <input type="number" id="compKmExternoIda" placeholder="0" min="0" step="1">
+                        </div>
+                        <div class="input-group">
+                            <label for="compKmExternoVolta">KM Volta Externo</label>
+                            <input type="number" id="compKmExternoVolta" placeholder="0" min="0" step="1">
+                        </div>
+                        <div class="input-group">
+                            <label for="compOferta">R$/TON Ofertado</label>
+                            <input type="number" id="compOferta" placeholder="0" min="0" step="1">
+                        </div>
+                    </div>
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="compToneladas">Carga Carregada (ton)</label>
+                            <input type="number" id="compToneladas" value="48" step="1" min="1">
+                        </div>
+                        <div class="input-group">
+                            <label class="toggle-label" style="margin-top: 20px;">
+                                <input type="checkbox" id="compExportacao">
+                                <span class="toggle-switch"></span>
+                                <span>Exportação (isento ICMS)</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="btnComparar" onclick="comparar()">Comparar Cenários</button>
+            </div>
+
+            <!-- Resultado Comparativo -->
+            <div id="resultadoComp" class="resultado hidden">
+                <h3>Resultado da Comparação</h3>
+
+                <div class="comp-grid">
+                    <!-- Cenário 1 -->
+                    <div class="comp-card">
+                        <h4 class="comp-card-title">Cenário 1 — Só Interno</h4>
+                        <p class="comp-card-desc">Vai vazio, pega a carga, volta</p>
+                        <div class="comp-line">
+                            <span>KM Total</span>
+                            <strong id="c1KmTotal">—</strong>
+                        </div>
+                        <div class="comp-line">
+                            <span>Custo c/ Depreciação</span>
+                            <strong id="c1CustoComDeprec">—</strong>
+                        </div>
+                        <div class="comp-line">
+                            <span>Custo s/ Depreciação</span>
+                            <strong id="c1CustoSemDeprec">—</strong>
+                        </div>
+                        <div class="comp-line">
+                            <span>Custo por Ton (c/ Dep.)</span>
+                            <strong id="c1CustoTonCom">—</strong>
+                        </div>
+                        <div class="comp-line">
+                            <span>Custo por Ton (s/ Dep.)</span>
+                            <strong id="c1CustoTonSem">—</strong>
+                        </div>
+                    </div>
+
+                    <!-- Cenário 2 -->
+                    <div class="comp-card">
+                        <h4 class="comp-card-title">Cenário 2 — Externo + Interno</h4>
+                        <p class="comp-card-desc">Faz frete externo, depois pega a carga</p>
+                        <div class="comp-line">
+                            <span>KM Externo</span>
+                            <strong id="c2KmExterno">—</strong>
+                        </div>
+                        <div class="comp-line">
+                            <span>KM Interno</span>
+                            <strong id="c2KmInterno">—</strong>
+                        </div>
+                        <div class="comp-line">
+                            <span>KM Total</span>
+                            <strong id="c2KmTotal">—</strong>
+                        </div>
+                        <div class="comp-line">
+                            <span>Receita Frete Externo</span>
+                            <strong id="c2Receita" class="text-green">—</strong>
+                        </div>
+                        <div class="comp-line">
+                            <span>Custo Total (c/ Dep.)</span>
+                            <strong id="c2CustoComDeprec">—</strong>
+                        </div>
+                        <div class="comp-line">
+                            <span>Custo Total (s/ Dep.)</span>
+                            <strong id="c2CustoSemDeprec">—</strong>
+                        </div>
+                        <div class="comp-line highlight-comp">
+                            <span>Custo - Receita (c/ Dep.)</span>
+                            <strong id="c2LiqComDeprec">—</strong>
+                        </div>
+                        <div class="comp-line highlight-comp">
+                            <span>Custo - Receita (s/ Dep.)</span>
+                            <strong id="c2LiqSemDeprec">—</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Veredicto -->
+                <div class="verdict-box" id="compVerdictBox">
+                    <span id="compVerdictIcon"></span>
+                    <span id="compVerdictText"></span>
+                </div>
+
+                <div class="reference-box">
+                    <h4>Economia</h4>
+                    <div class="ref-row">
+                        <span>Diferença c/ Depreciação</span>
+                        <strong id="compEconomiaCom">—</strong>
+                    </div>
+                    <div class="ref-row">
+                        <span>Diferença s/ Depreciação</span>
+                        <strong id="compEconomiaSem">—</strong>
                     </div>
                 </div>
             </div>
