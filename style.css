@@ -481,6 +481,12 @@ header h1 {
     margin-bottom: 8px;
 }
 
+.comp-hint {
+    font-size: 12px;
+    color: #9ca3af;
+    margin-bottom: 10px;
+}
+
 .comp-title {
     font-size: 13px;
     font-weight: 600;

@@ -194,32 +194,34 @@
             <div class="route-inputs">
                 <div class="comp-section">
                     <h3 class="comp-title">Rota Interna (puxada de carga)</h3>
+                    <p class="comp-hint">KM total ida + volta (base → carga → base)</p>
                     <div class="input-row">
                         <div class="input-group">
-                            <label for="compKmInternoIda">KM Ida (origem → carga)</label>
-                            <input type="number" id="compKmInternoIda" placeholder="0" min="0" step="1">
+                            <label for="compKmInternoIda">KM Ida</label>
+                            <input type="number" id="compKmInternoIda" placeholder="Ex: 660" min="0" step="1">
                         </div>
                         <div class="input-group">
-                            <label for="compKmInternoVolta">KM Volta (carga → base)</label>
-                            <input type="number" id="compKmInternoVolta" placeholder="0" min="0" step="1">
+                            <label for="compKmInternoVolta">KM Volta</label>
+                            <input type="number" id="compKmInternoVolta" placeholder="Ex: 662" min="0" step="1">
                         </div>
                     </div>
                 </div>
 
                 <div class="comp-section">
                     <h3 class="comp-title">Frete Externo (receita no caminho)</h3>
+                    <p class="comp-hint">KM do frete pago (ida + volta), separado da rota interna</p>
                     <div class="input-row three-cols">
                         <div class="input-group">
                             <label for="compKmExternoIda">KM Ida Externo</label>
-                            <input type="number" id="compKmExternoIda" placeholder="0" min="0" step="1">
+                            <input type="number" id="compKmExternoIda" placeholder="Ex: 393" min="0" step="1">
                         </div>
                         <div class="input-group">
                             <label for="compKmExternoVolta">KM Volta Externo</label>
-                            <input type="number" id="compKmExternoVolta" placeholder="0" min="0" step="1">
+                            <input type="number" id="compKmExternoVolta" placeholder="Ex: 393" min="0" step="1">
                         </div>
                         <div class="input-group">
                             <label for="compOferta">R$/TON Ofertado</label>
-                            <input type="number" id="compOferta" placeholder="0" min="0" step="1">
+                            <input type="number" id="compOferta" placeholder="Ex: 170" min="0" step="1">
                         </div>
                     </div>
                     <div class="input-row">

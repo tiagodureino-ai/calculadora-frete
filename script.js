@@ -158,8 +158,8 @@ function comparar() {
 
     // Cenário 2: externo + interno
     const kmExterno = kmExternoIda + kmExternoVolta;
-    const kmInterno = kmInternoVolta; // só a volta (interno), ida já é coberta pelo externo
-    const c2KmTotal = kmExterno + kmInternoIda + kmInternoVolta;
+    const kmInterno = kmInternoIda + kmInternoVolta;
+    const c2KmTotal = kmExterno + kmInterno;
     const c2ComDeprec = c2KmTotal * custoComDepKm;
     const c2SemDeprec = c2KmTotal * subtotalOpKm;
 
@@ -183,7 +183,7 @@ function comparar() {
 
     // Preencher Cenário 2
     document.getElementById('c2KmExterno').textContent = kmExterno.toLocaleString('pt-BR');
-    document.getElementById('c2KmInterno').textContent = (kmInternoIda + kmInternoVolta).toLocaleString('pt-BR');
+    document.getElementById('c2KmInterno').textContent = kmInterno.toLocaleString('pt-BR');
     document.getElementById('c2KmTotal').textContent = c2KmTotal.toLocaleString('pt-BR');
     document.getElementById('c2Receita').textContent = formatBRL(receitaLiquida);
     document.getElementById('c2CustoComDeprec').textContent = formatBRL(c2ComDeprec);
