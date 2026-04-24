@@ -186,8 +186,8 @@ function comparar() {
     document.getElementById('c2KmInterno').textContent = c2KmIntTotal.toLocaleString('pt-BR');
     document.getElementById('c2KmTotal').textContent = c2KmTotal.toLocaleString('pt-BR');
     document.getElementById('c2Receita').textContent = formatBRL(receitaLiquida);
-    document.getElementById('c2CustoComDeprec').textContent = formatBRL(c2ComDeprec);
-    document.getElementById('c2CustoSemDeprec').textContent = formatBRL(c2SemDeprec);
+    document.getElementById('c2CustoTonCom').textContent = formatBRL(c2LiqCom / tons) + '/ton';
+    document.getElementById('c2CustoTonSem').textContent = formatBRL(c2LiqSem / tons) + '/ton';
     document.getElementById('c2LiqComDeprec').textContent = formatBRL(c2LiqCom);
     document.getElementById('c2LiqSemDeprec').textContent = formatBRL(c2LiqSem);
 
