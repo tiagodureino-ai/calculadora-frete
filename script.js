@@ -126,9 +126,83 @@ function calcular() {
 function trocarAba(aba) {
     document.getElementById('abaSimulacao').classList.toggle('hidden', aba !== 'simulacao');
     document.getElementById('abaComparativo').classList.toggle('hidden', aba !== 'comparativo');
+    document.getElementById('abaCotacao').classList.toggle('hidden', aba !== 'cotacao');
+    const map = { simulacao: 0, comparativo: 1, cotacao: 2 };
     document.querySelectorAll('.tab').forEach((t, i) => {
-        t.classList.toggle('active', (i === 0 && aba === 'simulacao') || (i === 1 && aba === 'comparativo'));
+        t.classList.toggle('active', i === map[aba]);
     });
+}
+
+// Gerar cotação
+function gerarCotacao() {
+    const origem = document.getElementById('cotOrigem').value.trim();
+    const destino = document.getElementById('cotDestino').value.trim();
+    const km = getVal('cotKm');
+    const produto = document.getElementById('cotProduto').value.trim();
+    const tons = getVal('cotToneladas');
+    const valor = getVal('cotValor');
+    const validade = document.getElementById('cotValidade').value;
+    const obs = document.getElementById('cotObs').value.trim();
+
+    if (!origem || !destino) {
+        alert('Informe origem e destino.');
+        return;
+    }
+    if (!valor || valor <= 0) {
+        alert('Informe o valor R$/TON.');
+        return;
+    }
+
+    const valorTotal = valor * tons;
+    const hoje = new Date().toLocaleDateString('pt-BR');
+    let validadeFmt = '';
+    if (validade) {
+        const [y, m, d] = validade.split('-');
+        validadeFmt = `${d}/${m}/${y}`;
+    }
+
+    let texto = `*COTAÇÃO DE FRETE — DUREINO TRANSPORTES*\n`;
+    texto += `─────────────────────────────\n\n`;
+    texto += `📅 *Data:* ${hoje}\n`;
+    if (validadeFmt) texto += `⏳ *Validade:* ${validadeFmt}\n`;
+    texto += `\n*ROTA*\n`;
+    texto += `📍 Origem: ${origem}\n`;
+    texto += `📍 Destino: ${destino}\n`;
+    if (km) texto += `🛣️ Distância: ${km.toLocaleString('pt-BR')} km\n`;
+    if (produto) texto += `📦 Produto: ${produto}\n`;
+    texto += `\n*VALORES*\n`;
+    texto += `⚖️ Carga: ${tons} toneladas\n`;
+    texto += `💰 Valor por tonelada: ${formatBRL(valor)}\n`;
+    texto += `💵 *Valor Total: ${formatBRL(valorTotal)}*\n`;
+    if (obs) {
+        texto += `\n*OBSERVAÇÕES*\n${obs}\n`;
+    }
+    texto += `\n─────────────────────────────\n`;
+    texto += `Dureino Transportes`;
+
+    document.getElementById('cotacaoTexto').textContent = texto;
+    document.getElementById('resultadoCotacao').classList.remove('hidden');
+    document.getElementById('resultadoCotacao').scrollIntoView({ behavior: 'smooth' });
+}
+
+function copiarCotacao() {
+    const texto = document.getElementById('cotacaoTexto').textContent;
+    navigator.clipboard.writeText(texto).then(() => {
+        const btn = document.getElementById('btnCopiar');
+        const original = btn.textContent;
+        btn.textContent = '✓ Copiado!';
+        btn.classList.add('copied');
+        setTimeout(() => {
+            btn.textContent = original;
+            btn.classList.remove('copied');
+        }, 2000);
+    }).catch(() => alert('Erro ao copiar. Selecione o texto manualmente.'));
+}
+
+function compartilharWhatsApp() {
+    const texto = document.getElementById('cotacaoTexto').textContent;
+    const url = 'https://wa.me/?text=' + encodeURIComponent(texto);
+    window.open(url, '_blank');
 }
 
 // Comparar cenários

@@ -84,8 +84,9 @@
 
         <!-- ABAS -->
         <div class="tabs">
-            <button class="tab active" onclick="trocarAba('simulacao')">Simulação da Rota</button>
-            <button class="tab" onclick="trocarAba('comparativo')">Comparativo Interno x Externo</button>
+            <button class="tab active" onclick="trocarAba('simulacao')">Simulação</button>
+            <button class="tab" onclick="trocarAba('comparativo')">Comparativo</button>
+            <button class="tab" onclick="trocarAba('cotacao')">Cotação</button>
         </div>
 
         <!-- CALCULADORA -->
@@ -336,6 +337,79 @@
                         <span>% Depreciação Coberta</span>
                         <strong id="compDeprecPct">—</strong>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- COTAÇÃO -->
+        <section class="panel calc-panel hidden" id="abaCotacao">
+            <h2>Cotação para Cliente</h2>
+            <p class="panel-note">Preencha os dados e gere o texto formatado para enviar</p>
+
+            <div class="route-inputs">
+                <div class="comp-section">
+                    <h3 class="comp-title">Rota</h3>
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="cotOrigem">Origem</label>
+                            <input type="text" id="cotOrigem" placeholder="Ex: Fazenda Vereda Bela (PI)">
+                        </div>
+                        <div class="input-group">
+                            <label for="cotDestino">Destino</label>
+                            <input type="text" id="cotDestino" placeholder="Ex: Porto São Luís (MA)">
+                        </div>
+                    </div>
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="cotKm">KM da Rota</label>
+                            <input type="number" id="cotKm" placeholder="Ex: 2557" min="1" step="1">
+                        </div>
+                        <div class="input-group">
+                            <label for="cotProduto">Produto / Tipo de Carga</label>
+                            <input type="text" id="cotProduto" placeholder="Ex: Soja, Calcário, Gesso">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="comp-section">
+                    <h3 class="comp-title">Valores</h3>
+                    <div class="input-row three-cols">
+                        <div class="input-group">
+                            <label for="cotToneladas">Toneladas</label>
+                            <input type="number" id="cotToneladas" value="48" step="1" min="1">
+                        </div>
+                        <div class="input-group">
+                            <label for="cotValor">R$/TON</label>
+                            <input type="number" id="cotValor" placeholder="0,00" min="0" step="0.01">
+                        </div>
+                        <div class="input-group">
+                            <label for="cotValidade">Validade da Proposta</label>
+                            <input type="date" id="cotValidade">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="comp-section">
+                    <h3 class="comp-title">Observações (opcional)</h3>
+                    <textarea id="cotObs" rows="3" placeholder="Ex: Valor inclui pedágios. Pagamento em 15 dias após emissão da NF."></textarea>
+                </div>
+
+                <button id="btnGerarCotacao" onclick="gerarCotacao()">Gerar Cotação</button>
+            </div>
+
+            <!-- Resultado Cotação -->
+            <div id="resultadoCotacao" class="resultado hidden">
+                <h3>Cotação Gerada</h3>
+
+                <div class="cotacao-preview" id="cotacaoTexto"></div>
+
+                <div class="cotacao-actions">
+                    <button class="btn-secondary" onclick="copiarCotacao()" id="btnCopiar">
+                        📋 Copiar Texto
+                    </button>
+                    <button class="btn-secondary" onclick="compartilharWhatsApp()">
+                        💬 Enviar por WhatsApp
+                    </button>
                 </div>
             </div>
         </section>
