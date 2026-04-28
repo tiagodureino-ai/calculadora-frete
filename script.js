@@ -210,6 +210,7 @@ function comparar() {
     const kmIda = getVal('compKmIda');
     const kmVolta = getVal('compKmVolta');
     const kmExterno = getVal('compKmExterno');
+    const kmInternoC2 = getVal('compKmInterno');
     const oferta = getVal('compOferta');
     const tons = getVal('compToneladas');
 
@@ -229,9 +230,9 @@ function comparar() {
     const c1ComDeprec = c1KmTotal * custoComDepKm;
     const c1SemDeprec = c1KmTotal * subtotalOpKm;
 
-    // Cenário 2: externo (já inclui ida) + volta interna
+    // Cenário 2: externo + interno (informados pelo usuário)
     const c2KmExtTotal = kmExterno;
-    const c2KmIntTotal = kmVolta;
+    const c2KmIntTotal = kmInternoC2;
     const c2KmTotal = c2KmExtTotal + c2KmIntTotal;
     const c2ComDeprec = c2KmTotal * custoComDepKm;
     const c2SemDeprec = c2KmTotal * subtotalOpKm;
