@@ -168,7 +168,6 @@ function gerarCotacao() {
     texto += `\n*ROTA*\n`;
     texto += `📍 Origem: ${origem}\n`;
     texto += `📍 Destino: ${destino}\n`;
-    if (km) texto += `🛣️ Distância: ${km.toLocaleString('pt-BR')} km\n`;
     if (produto) texto += `📦 Produto: ${produto}\n`;
     texto += `\n*VALORES*\n`;
     texto += `⚖️ Carga: ${tons} toneladas\n`;
