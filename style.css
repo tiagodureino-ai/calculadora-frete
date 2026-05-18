@@ -325,7 +325,10 @@ header h1 {
     transform: translateX(20px);
 }
 
-#btnCalcular {
+#btnCalcular,
+#btnComparar,
+#btnGerarCotacao,
+#btnCalcularSaca {
     margin-top: 8px;
     padding: 12px;
     background: #1e40af;
@@ -336,9 +339,13 @@ header h1 {
     font-weight: 600;
     cursor: pointer;
     transition: background 0.2s;
+    width: 100%;
 }
 
-#btnCalcular:hover {
+#btnCalcular:hover,
+#btnComparar:hover,
+#btnGerarCotacao:hover,
+#btnCalcularSaca:hover {
     background: #1e3a8a;
 }
 
