@@ -126,11 +126,59 @@ function calcular() {
 function trocarAba(aba) {
     document.getElementById('abaSimulacao').classList.toggle('hidden', aba !== 'simulacao');
     document.getElementById('abaComparativo').classList.toggle('hidden', aba !== 'comparativo');
+    document.getElementById('abaSaca').classList.toggle('hidden', aba !== 'saca');
     document.getElementById('abaCotacao').classList.toggle('hidden', aba !== 'cotacao');
-    const map = { simulacao: 0, comparativo: 1, cotacao: 2 };
+    const map = { simulacao: 0, comparativo: 1, saca: 2, cotacao: 3 };
     document.querySelectorAll('.tab').forEach((t, i) => {
         t.classList.toggle('active', i === map[aba]);
     });
+}
+
+// Calcular valor da saca
+function calcularSaca() {
+    const origem = document.getElementById('sacaOrigem').value.trim() || '—';
+    const destino = document.getElementById('sacaDestino').value.trim() || '—';
+    const kmIda = getVal('sacaKmIda');
+    const kmVolta = getVal('sacaKmVolta');
+    const tons = getVal('sacaToneladas');
+
+    if (!kmIda && !kmVolta) {
+        alert('Informe o KM Ida e Volta.');
+        return;
+    }
+    if (!tons || tons <= 0) {
+        alert('Informe as toneladas.');
+        return;
+    }
+
+    // Custo por KM com depreciação (das configurações)
+    const subtotalOpKm = getVal('custoCombustiveis') + getVal('custoPneus') +
+        getVal('custoManutencao') + getVal('custoMotorista') + getVal('custoOutros');
+    const custoComDepKm = subtotalOpKm + getVal('custoDepreciacao');
+
+    const kmTotal = kmIda + kmVolta;
+    const custoTotal = kmTotal * custoComDepKm;
+    const custoPorTon = custoTotal / tons;
+    // 1 tonelada = 1000kg / 60kg por saca = 16,6667 sacas
+    const custoPorSaca = custoPorTon * 60 / 1000;
+
+    // Preencher tabela
+    document.getElementById('sacaT1Origem').textContent = origem;
+    document.getElementById('sacaT1Destino').textContent = destino;
+    document.getElementById('sacaT1Km').textContent = kmIda.toLocaleString('pt-BR');
+    document.getElementById('sacaT2Origem').textContent = destino;
+    document.getElementById('sacaT2Destino').textContent = origem;
+    document.getElementById('sacaT2Km').textContent = kmVolta.toLocaleString('pt-BR');
+
+    // Preencher cards
+    document.getElementById('sacaCustoKm').textContent = 'R$ ' + custoComDepKm.toFixed(4).replace('.', ',');
+    document.getElementById('sacaCustoTotal').textContent = formatBRL(custoTotal);
+    document.getElementById('sacaTons').textContent = tons.toLocaleString('pt-BR');
+    document.getElementById('sacaCustoTon').textContent = formatBRL(custoPorTon);
+    document.getElementById('sacaCustoSaca').textContent = formatBRL(custoPorSaca);
+
+    document.getElementById('resultadoSaca').classList.remove('hidden');
+    document.getElementById('resultadoSaca').scrollIntoView({ behavior: 'smooth' });
 }
 
 // Gerar cotação

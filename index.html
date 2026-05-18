@@ -86,6 +86,7 @@
         <div class="tabs">
             <button class="tab active" onclick="trocarAba('simulacao')">Simulação</button>
             <button class="tab" onclick="trocarAba('comparativo')">Comparativo</button>
+            <button class="tab" onclick="trocarAba('saca')">Por Saca</button>
             <button class="tab" onclick="trocarAba('cotacao')">Cotação</button>
         </div>
 
@@ -342,6 +343,95 @@
                     <div class="ref-row">
                         <span>% Depreciação Coberta</span>
                         <strong id="compDeprecPct">—</strong>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SIMULADOR POR SACA -->
+        <section class="panel calc-panel hidden" id="abaSaca">
+            <h2>Simulador por Saca</h2>
+            <p class="panel-note">Calcula o custo da saca (60kg) com base no custo total por KM (c/ depreciação)</p>
+
+            <div class="route-inputs">
+                <div class="comp-section">
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="sacaOrigem">Origem</label>
+                            <input type="text" id="sacaOrigem" placeholder="Ex: DUREINO">
+                        </div>
+                        <div class="input-group">
+                            <label for="sacaDestino">Destino</label>
+                            <input type="text" id="sacaDestino" placeholder="Ex: FAZENDA">
+                        </div>
+                    </div>
+                    <div class="input-row three-cols">
+                        <div class="input-group">
+                            <label for="sacaKmIda">KM Ida</label>
+                            <input type="number" id="sacaKmIda" placeholder="Ex: 600" min="0" step="1">
+                        </div>
+                        <div class="input-group">
+                            <label for="sacaKmVolta">KM Volta</label>
+                            <input type="number" id="sacaKmVolta" placeholder="Ex: 650" min="0" step="1">
+                        </div>
+                        <div class="input-group">
+                            <label for="sacaToneladas">Toneladas</label>
+                            <input type="number" id="sacaToneladas" value="48" step="1" min="1">
+                        </div>
+                    </div>
+                </div>
+
+                <button id="btnCalcularSaca" onclick="calcularSaca()">Calcular Valor da Saca</button>
+            </div>
+
+            <!-- Resultado Saca -->
+            <div id="resultadoSaca" class="resultado hidden">
+                <h3>Resultado</h3>
+
+                <div class="saca-table-wrapper">
+                    <table class="saca-table">
+                        <thead>
+                            <tr>
+                                <th>ORIGEM</th>
+                                <th>DESTINO</th>
+                                <th>KM</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td id="sacaT1Origem">—</td>
+                                <td id="sacaT1Destino">—</td>
+                                <td id="sacaT1Km" class="text-right">—</td>
+                            </tr>
+                            <tr>
+                                <td id="sacaT2Origem">—</td>
+                                <td id="sacaT2Destino">—</td>
+                                <td id="sacaT2Km" class="text-right">—</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="result-cards" style="margin-top: 16px;">
+                    <div class="result-card">
+                        <span class="card-label">Custo por KM (c/ Dep.)</span>
+                        <span class="card-value" id="sacaCustoKm">—</span>
+                    </div>
+                    <div class="result-card">
+                        <span class="card-label">Custo Total</span>
+                        <span class="card-value" id="sacaCustoTotal">—</span>
+                    </div>
+                    <div class="result-card">
+                        <span class="card-label">Toneladas</span>
+                        <span class="card-value" id="sacaTons">—</span>
+                    </div>
+                    <div class="result-card">
+                        <span class="card-label">Custo por Tonelada</span>
+                        <span class="card-value" id="sacaCustoTon">—</span>
+                    </div>
+                    <div class="result-card highlight-card">
+                        <span class="card-label">Custo por Saca (60kg)</span>
+                        <span class="card-value" id="sacaCustoSaca">—</span>
                     </div>
                 </div>
             </div>

@@ -601,6 +601,46 @@ header h1 {
     }
 }
 
+/* Simulador por Saca */
+.saca-table-wrapper {
+    overflow-x: auto;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+}
+
+.saca-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.saca-table thead th {
+    background: #1e40af;
+    color: #fff;
+    padding: 10px 14px;
+    font-weight: 600;
+    text-align: left;
+    font-size: 13px;
+    letter-spacing: 0.3px;
+}
+
+.saca-table tbody td {
+    padding: 12px 14px;
+    background: #fef9c3;
+    border-bottom: 1px solid #fde68a;
+    color: #1a1a2e;
+    font-weight: 500;
+}
+
+.saca-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.saca-table .text-right {
+    text-align: right;
+    font-weight: 700;
+}
+
 /* Cotação */
 textarea {
     width: 100%;
