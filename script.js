@@ -353,7 +353,13 @@ function comparar() {
 
 // Listeners para atualizar totais ao editar parâmetros
 document.querySelectorAll('.config-panel input').forEach(input => {
-    input.addEventListener('input', atualizarTotais);
+    input.addEventListener('input', () => {
+        atualizarTotais();
+        // Oculta resultados antigos para forçar novo cálculo
+        document.getElementById('resultado').classList.add('hidden');
+        document.getElementById('resultadoComp').classList.add('hidden');
+        document.getElementById('resultadoSaca').classList.add('hidden');
+    });
 });
 
 // Calcular ao pressionar Enter nos campos da rota
