@@ -608,6 +608,68 @@ header h1 {
     }
 }
 
+/* Histórico */
+.historico-group {
+    margin-top: 20px;
+}
+
+.historico-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-top: 8px;
+}
+
+.historico-table thead th {
+    background: #f3f4f6;
+    color: #374151;
+    padding: 8px 10px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    border-bottom: 2px solid #e5e7eb;
+}
+
+.historico-table tbody td {
+    padding: 10px;
+    border-bottom: 1px solid #e5e7eb;
+    color: #1a1a2e;
+}
+
+.historico-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.hist-input {
+    width: 90px;
+    padding: 4px 8px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 13px;
+    text-align: right;
+    background: #fff;
+}
+
+.hist-input:focus {
+    outline: none;
+    border-color: #3b82f6;
+}
+
+.hist-var {
+    font-weight: 700;
+    text-align: right;
+}
+
+.hist-var.positive {
+    color: #dc2626;
+}
+
+.hist-var.negative {
+    color: #16a34a;
+}
+
 /* Simulador por Saca */
 .saca-table-wrapper {
     overflow-x: auto;
