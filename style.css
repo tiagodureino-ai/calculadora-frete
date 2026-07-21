@@ -609,46 +609,81 @@ header h1 {
 }
 
 /* Histórico */
-.historico-group {
-    margin-top: 20px;
+.historico-scroll {
+    overflow-x: auto;
+    margin-top: 4px;
 }
 
 .historico-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 13px;
-    margin-top: 8px;
+    font-size: 12px;
 }
 
 .historico-table thead th {
     background: #f3f4f6;
     color: #374151;
-    padding: 8px 10px;
-    text-align: left;
+    padding: 6px 8px;
+    text-align: center;
     font-weight: 600;
-    font-size: 12px;
+    font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 0.3px;
     border-bottom: 2px solid #e5e7eb;
+    white-space: nowrap;
+}
+
+.historico-table thead th:first-child {
+    text-align: left;
 }
 
 .historico-table tbody td {
-    padding: 10px;
-    border-bottom: 1px solid #e5e7eb;
+    padding: 6px 8px;
+    border-bottom: 1px solid #f1f5f9;
     color: #1a1a2e;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.historico-table tbody td:first-child {
+    text-align: left;
+    color: #6b7280;
+    font-size: 12px;
 }
 
 .historico-table tbody tr:last-child td {
     border-bottom: none;
 }
 
+.historico-table .row-total td {
+    background: #eff6ff;
+    border-top: 2px solid #dbeafe;
+    border-bottom: 2px solid #dbeafe;
+    color: #1e40af;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.historico-table .row-total td:first-child {
+    color: #1e40af;
+}
+
+.historico-table .row-var td {
+    background: #fafafa;
+}
+
+.historico-table .row-km td {
+    background: #fafafa;
+    font-weight: 600;
+}
+
 .hist-input {
-    width: 90px;
-    padding: 4px 8px;
+    width: 80px;
+    padding: 3px 6px;
     border: 1px solid #d1d5db;
-    border-radius: 6px;
-    font-size: 13px;
-    text-align: right;
+    border-radius: 4px;
+    font-size: 12px;
+    text-align: center;
     background: #fff;
 }
 
@@ -659,7 +694,6 @@ header h1 {
 
 .hist-var {
     font-weight: 700;
-    text-align: right;
 }
 
 .hist-var.positive {

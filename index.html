@@ -59,6 +59,80 @@
                     </div>
                 </div>
 
+                <div class="param-group historico-group">
+                    <h3>Histórico — Últimos 3 Meses</h3>
+                    <div class="historico-scroll">
+                        <table class="historico-table">
+                            <thead>
+                                <tr>
+                                    <th>Item</th>
+                                    <th>Abril/26</th>
+                                    <th>Maio/26</th>
+                                    <th>Junho/26</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Combustíveis</td>
+                                    <td>2,7726</td>
+                                    <td>2,7252</td>
+                                    <td>2,8461</td>
+                                </tr>
+                                <tr>
+                                    <td>Pneus</td>
+                                    <td>0,2492</td>
+                                    <td>0,2625</td>
+                                    <td>0,2231</td>
+                                </tr>
+                                <tr>
+                                    <td>Manutenção</td>
+                                    <td>0,6518</td>
+                                    <td>0,7362</td>
+                                    <td>0,7828</td>
+                                </tr>
+                                <tr>
+                                    <td>Motorista</td>
+                                    <td>1,3778</td>
+                                    <td>1,5299</td>
+                                    <td>1,3341</td>
+                                </tr>
+                                <tr>
+                                    <td>Outros</td>
+                                    <td>0,4049</td>
+                                    <td>0,3783</td>
+                                    <td>0,3736</td>
+                                </tr>
+                                <tr>
+                                    <td>Depreciação</td>
+                                    <td>2,2151</td>
+                                    <td>2,3722</td>
+                                    <td>2,0721</td>
+                                </tr>
+                                <tr class="row-total">
+                                    <td><strong>Total R$/km</strong></td>
+                                    <td><strong>7,6714</strong></td>
+                                    <td><strong>8,0043</strong></td>
+                                    <td><strong>7,6318</strong></td>
+                                </tr>
+                                <tr class="row-var">
+                                    <td>Variação</td>
+                                    <td>—</td>
+                                    <td class="hist-var positive">+4,3%</td>
+                                    <td class="hist-var negative">-4,7%</td>
+                                </tr>
+                                <tr class="row-km">
+                                    <td>KM Rodado</td>
+                                    <td>
+                                        <input type="number" id="histKmAbril" placeholder="—" min="0" step="1" class="hist-input">
+                                    </td>
+                                    <td>545.252</td>
+                                    <td>593.910</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
                 <div class="param-group">
                     <h3>Impostos sobre Frete</h3>
                     <div class="param-row">
@@ -77,42 +151,6 @@
                         <label>Total Impostos</label>
                         <span id="totalImpostos" class="calc-value">14.31%</span>
                     </div>
-                </div>
-
-                <div class="param-group historico-group">
-                    <h3>Histórico — Últimos 3 Meses</h3>
-                    <table class="historico-table">
-                        <thead>
-                            <tr>
-                                <th>Mês</th>
-                                <th>KM Rodado</th>
-                                <th>Custo R$/km</th>
-                                <th>Variação</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Abril/2026</td>
-                                <td>
-                                    <input type="number" id="histKmAbril" placeholder="—" min="0" step="1" class="hist-input">
-                                </td>
-                                <td>R$ 7,6714</td>
-                                <td class="hist-var">—</td>
-                            </tr>
-                            <tr>
-                                <td>Maio/2026</td>
-                                <td>545.252</td>
-                                <td>R$ 8,0043</td>
-                                <td class="hist-var positive">+4,3%</td>
-                            </tr>
-                            <tr>
-                                <td>Junho/2026</td>
-                                <td>593.910</td>
-                                <td>R$ 7,6318</td>
-                                <td class="hist-var negative">-4,7%</td>
-                            </tr>
-                        </tbody>
-                    </table>
                 </div>
 
             </div>
