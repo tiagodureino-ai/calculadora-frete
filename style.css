@@ -704,6 +704,25 @@ header h1 {
     color: #16a34a;
 }
 
+.cell-var {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    margin-left: 4px;
+    padding: 1px 4px;
+    border-radius: 3px;
+}
+
+.cell-var.positive {
+    color: #dc2626;
+    background: #fef2f2;
+}
+
+.cell-var.negative {
+    color: #16a34a;
+    background: #f0fdf4;
+}
+
 /* Simulador por Saca */
 .saca-table-wrapper {
     overflow-x: auto;
