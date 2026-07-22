@@ -22,6 +22,16 @@
                 <h2>Configurações</h2>
                 <button class="btn-close" onclick="toggleConfig()">&times;</button>
             </div>
+
+            <div class="alt-cost-row">
+                <label class="toggle-label">
+                    <input type="checkbox" id="custoAlternativo" onchange="alternarCustoAlternativo()">
+                    <span class="toggle-switch"></span>
+                    <span>Usar Custo Alternativo (Depreciação Reduzida)</span>
+                </label>
+                <span class="alt-cost-hint" id="custoAlternativoHint">Ativa: Total R$ 5,76/km · Padrão: R$ 7,63/km</span>
+            </div>
+
             <div class="config-grid">
                 <div class="param-group">
                     <h3>Custos Operacionais (R$/KM)</h3>

@@ -3,6 +3,38 @@ function toggleConfig() {
     document.getElementById('configPanel').classList.toggle('hidden');
 }
 
+// Conjuntos de custos: padrão (Junho c/ depreciação cheia) e alternativo (depreciação reduzida)
+const CUSTOS_PADRAO = {
+    custoCombustiveis: '2.8461',
+    custoPneus: '0.2231',
+    custoManutencao: '0.7828',
+    custoMotorista: '1.3341',
+    custoOutros: '0.3736',
+    custoDepreciacao: '2.0721'
+};
+
+const CUSTOS_ALTERNATIVO = {
+    custoCombustiveis: '2.8460',
+    custoPneus: '0.2231',
+    custoManutencao: '0.7828',
+    custoMotorista: '1.3341',
+    custoOutros: '0.3736',
+    custoDepreciacao: '0.1047'
+};
+
+function alternarCustoAlternativo() {
+    const ativo = document.getElementById('custoAlternativo').checked;
+    const conjunto = ativo ? CUSTOS_ALTERNATIVO : CUSTOS_PADRAO;
+    Object.keys(conjunto).forEach(id => {
+        document.getElementById(id).value = conjunto[id];
+    });
+    atualizarTotais();
+    // Oculta resultados antigos para forçar novo cálculo
+    document.getElementById('resultado').classList.add('hidden');
+    document.getElementById('resultadoComp').classList.add('hidden');
+    document.getElementById('resultadoSaca').classList.add('hidden');
+}
+
 // Atualiza totais calculados no painel de custos
 function atualizarTotais() {
     const custos = [
