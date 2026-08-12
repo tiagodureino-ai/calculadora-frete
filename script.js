@@ -3,23 +3,23 @@ function toggleConfig() {
     document.getElementById('configPanel').classList.toggle('hidden');
 }
 
-// Conjuntos de custos: padrão (Junho c/ depreciação cheia) e alternativo (depreciação reduzida)
+// Conjuntos de custos: padrão (Julho c/ depreciação reduzida) e alternativo (depreciação cheia)
 const CUSTOS_PADRAO = {
-    custoCombustiveis: '2.8461',
-    custoPneus: '0.2231',
-    custoManutencao: '0.7828',
-    custoMotorista: '1.3341',
-    custoOutros: '0.3736',
-    custoDepreciacao: '2.0721'
+    custoCombustiveis: '2.8712',
+    custoPneus: '0.2440',
+    custoManutencao: '0.6514',
+    custoMotorista: '1.5764',
+    custoOutros: '0.3590',
+    custoDepreciacao: '0.1020'
 };
 
 const CUSTOS_ALTERNATIVO = {
-    custoCombustiveis: '2.8460',
-    custoPneus: '0.2231',
-    custoManutencao: '0.7828',
-    custoMotorista: '1.3341',
-    custoOutros: '0.3736',
-    custoDepreciacao: '0.1047'
+    custoCombustiveis: '2.8712',
+    custoPneus: '0.2440',
+    custoManutencao: '0.6514',
+    custoMotorista: '1.5764',
+    custoOutros: '0.3590',
+    custoDepreciacao: '2.0721'
 };
 
 function alternarCustoAlternativo() {

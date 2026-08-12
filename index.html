@@ -27,9 +27,9 @@
                 <label class="toggle-label">
                     <input type="checkbox" id="custoAlternativo" onchange="alternarCustoAlternativo()">
                     <span class="toggle-switch"></span>
-                    <span>Usar Custo Alternativo (Depreciação Reduzida)</span>
+                    <span>Considerar Depreciação Cheia</span>
                 </label>
-                <span class="alt-cost-hint" id="custoAlternativoHint">Ativa: Total R$ 5,76/km · Padrão: R$ 7,63/km</span>
+                <span class="alt-cost-hint" id="custoAlternativoHint">Ativa: R$ 7,77/km (dep. cheia) · Padrão: R$ 5,80/km (dep. reduzida)</span>
             </div>
 
             <div class="config-grid">
@@ -37,35 +37,35 @@
                     <h3>Custos Operacionais (R$/KM)</h3>
                     <div class="param-row">
                         <label for="custoCombustiveis">Combustíveis</label>
-                        <input type="number" id="custoCombustiveis" value="2.8461" step="0.0001">
+                        <input type="number" id="custoCombustiveis" value="2.8712" step="0.0001">
                     </div>
                     <div class="param-row">
                         <label for="custoPneus">Pneus</label>
-                        <input type="number" id="custoPneus" value="0.2231" step="0.0001">
+                        <input type="number" id="custoPneus" value="0.2440" step="0.0001">
                     </div>
                     <div class="param-row">
                         <label for="custoManutencao">Manutenção</label>
-                        <input type="number" id="custoManutencao" value="0.7828" step="0.0001">
+                        <input type="number" id="custoManutencao" value="0.6514" step="0.0001">
                     </div>
                     <div class="param-row">
                         <label for="custoMotorista">Motorista</label>
-                        <input type="number" id="custoMotorista" value="1.3341" step="0.0001">
+                        <input type="number" id="custoMotorista" value="1.5764" step="0.0001">
                     </div>
                     <div class="param-row">
                         <label for="custoOutros">Outros</label>
-                        <input type="number" id="custoOutros" value="0.3736" step="0.0001">
+                        <input type="number" id="custoOutros" value="0.3590" step="0.0001">
                     </div>
                     <div class="param-row total-row">
                         <label>Subtotal Operacional</label>
-                        <span id="subtotalOp" class="calc-value">5.5597</span>
+                        <span id="subtotalOp" class="calc-value">5.7020</span>
                     </div>
                     <div class="param-row">
                         <label for="custoDepreciacao">Depreciação</label>
-                        <input type="number" id="custoDepreciacao" value="2.0721" step="0.0001">
+                        <input type="number" id="custoDepreciacao" value="0.1020" step="0.0001">
                     </div>
                     <div class="param-row total-row highlight-total">
                         <label>Custo Total R$/KM</label>
-                        <span id="custoTotalKm" class="calc-value">7.6318</span>
+                        <span id="custoTotalKm" class="calc-value">5.8040</span>
                     </div>
                 </div>
 
@@ -76,59 +76,59 @@
                             <thead>
                                 <tr>
                                     <th>Item</th>
-                                    <th>Abril/26</th>
                                     <th>Maio/26</th>
                                     <th>Junho/26</th>
+                                    <th>Julho/26</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>Combustíveis</td>
-                                    <td>2,7726</td>
-                                    <td>2,7252 <span class="cell-var negative">-1,7%</span></td>
+                                    <td>2,7252</td>
                                     <td>2,8461 <span class="cell-var positive">+4,4%</span></td>
+                                    <td>2,8712 <span class="cell-var positive">+0,9%</span></td>
                                 </tr>
                                 <tr>
                                     <td>Pneus</td>
-                                    <td>0,2492</td>
-                                    <td>0,2625 <span class="cell-var positive">+5,3%</span></td>
+                                    <td>0,2625</td>
                                     <td>0,2231 <span class="cell-var negative">-15,0%</span></td>
+                                    <td>0,2440 <span class="cell-var positive">+9,4%</span></td>
                                 </tr>
                                 <tr>
                                     <td>Manutenção</td>
-                                    <td>0,6518</td>
-                                    <td>0,7362 <span class="cell-var positive">+12,9%</span></td>
+                                    <td>0,7362</td>
                                     <td>0,7828 <span class="cell-var positive">+6,3%</span></td>
+                                    <td>0,6514 <span class="cell-var negative">-16,8%</span></td>
                                 </tr>
                                 <tr>
                                     <td>Motorista</td>
-                                    <td>1,3778</td>
-                                    <td>1,5299 <span class="cell-var positive">+11,0%</span></td>
+                                    <td>1,5299</td>
                                     <td>1,3341 <span class="cell-var negative">-12,8%</span></td>
+                                    <td>1,5764 <span class="cell-var positive">+18,2%</span></td>
                                 </tr>
                                 <tr>
                                     <td>Outros</td>
-                                    <td>0,4049</td>
-                                    <td>0,3783 <span class="cell-var negative">-6,6%</span></td>
+                                    <td>0,3783</td>
                                     <td>0,3736 <span class="cell-var negative">-1,2%</span></td>
+                                    <td>0,3590 <span class="cell-var negative">-3,9%</span></td>
                                 </tr>
                                 <tr>
                                     <td>Depreciação</td>
-                                    <td>2,2151</td>
-                                    <td>2,3722 <span class="cell-var positive">+7,1%</span></td>
+                                    <td>2,3722</td>
                                     <td>2,0721 <span class="cell-var negative">-12,7%</span></td>
+                                    <td>0,1020 <span class="cell-var negative">-95,1%</span></td>
                                 </tr>
                                 <tr class="row-total">
                                     <td><strong>Total R$/km</strong></td>
-                                    <td><strong>7,6714</strong></td>
-                                    <td><strong>8,0043</strong> <span class="cell-var positive">+4,3%</span></td>
+                                    <td><strong>8,0043</strong></td>
                                     <td><strong>7,6318</strong> <span class="cell-var negative">-4,7%</span></td>
+                                    <td><strong>5,8040</strong> <span class="cell-var negative">-24,0%</span></td>
                                 </tr>
                                 <tr class="row-km">
                                     <td>KM Rodado</td>
-                                    <td>615.282</td>
-                                    <td>545.252 <span class="cell-var negative">-11,4%</span></td>
+                                    <td>545.252</td>
                                     <td>593.910 <span class="cell-var positive">+8,9%</span></td>
+                                    <td>652.686 <span class="cell-var positive">+9,9%</span></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -587,7 +587,7 @@
         </section>
 
         <footer>
-            <p>Uso interno — Dados base: Junho/2026 | KM Rodado: 593.910</p>
+            <p>Uso interno — Dados base: Julho/2026 | KM Rodado: 652.686</p>
         </footer>
     </div>
 
