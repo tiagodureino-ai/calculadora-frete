@@ -783,6 +783,110 @@ header h1 {
     font-weight: 700;
 }
 
+/* Simulador Calcário */
+.calc-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-bottom: 12px;
+}
+
+.calc-table thead th {
+    background: #1e40af;
+    color: #fff;
+    padding: 8px 10px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.3px;
+}
+
+.calc-table thead th:first-child {
+    text-align: left;
+    background: transparent;
+    color: transparent;
+}
+
+.calc-table tbody td {
+    padding: 8px 10px;
+    border-bottom: 1px solid #e5e7eb;
+    color: #1a1a2e;
+}
+
+.calc-table tbody td:first-child {
+    color: #6b7280;
+    font-size: 13px;
+}
+
+.calc-table tbody td:not(:first-child) {
+    text-align: center;
+}
+
+.calc-table tbody input[type="number"] {
+    width: 100%;
+    max-width: 110px;
+    padding: 6px 8px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 13px;
+    text-align: right;
+    background: #fef9c3;
+    color: #1e40af;
+    font-weight: 600;
+}
+
+.calc-table tbody input[type="number"]:focus {
+    outline: none;
+    border-color: #3b82f6;
+    background: #fff;
+}
+
+.produto-table tbody td:not(:first-child) {
+    font-weight: 700;
+    color: #1e40af;
+}
+
+.calc-note {
+    font-size: 11px;
+    color: #9ca3af;
+    margin-top: 8px;
+    font-style: italic;
+}
+
+select {
+    padding: 10px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 15px;
+    background: #fff;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+select:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
+}
+
+#btnCalcCalcario {
+    margin-top: 8px;
+    padding: 12px;
+    background: #1e40af;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    transition: background 0.2s;
+}
+
+#btnCalcCalcario:hover {
+    background: #1e3a8a;
+}
+
 /* Cotação */
 textarea {
     width: 100%;

@@ -159,11 +159,167 @@ function trocarAba(aba) {
     document.getElementById('abaSimulacao').classList.toggle('hidden', aba !== 'simulacao');
     document.getElementById('abaComparativo').classList.toggle('hidden', aba !== 'comparativo');
     document.getElementById('abaSaca').classList.toggle('hidden', aba !== 'saca');
+    document.getElementById('abaCalcario').classList.toggle('hidden', aba !== 'calcario');
     document.getElementById('abaCotacao').classList.toggle('hidden', aba !== 'cotacao');
-    const map = { simulacao: 0, comparativo: 1, saca: 2, cotacao: 3 };
+    const map = { simulacao: 0, comparativo: 1, saca: 2, calcario: 3, cotacao: 4 };
     document.querySelectorAll('.tab').forEach((t, i) => {
         t.classList.toggle('active', i === map[aba]);
     });
+}
+
+// Simulador Calcário
+function calcularCalcario() {
+    // Mercadorias
+    const qtdCal = getVal('calcQtdCalcario');
+    const qtdGes = getVal('calcQtdGesso');
+    const qtdTotal = qtdCal + qtdGes;
+    const precoCompraCal = getVal('calcPrecoCompraCalcario');
+    const precoCompraGes = getVal('calcPrecoCompraGesso');
+    const precoVendaCal = getVal('calcPrecoVendaCalcario');
+    const precoVendaGes = getVal('calcPrecoVendaGesso');
+
+    if (qtdTotal <= 0) {
+        alert('Informe a quantidade de calcário ou gesso.');
+        return;
+    }
+
+    // Custo aquisição e receita
+    const custoAqCal = precoCompraCal * qtdCal;
+    const custoAqGes = precoCompraGes * qtdGes;
+    const custoAqTotal = custoAqCal + custoAqGes;
+    const receitaCal = precoVendaCal * qtdCal;
+    const receitaGes = precoVendaGes * qtdGes;
+    const receitaBruta = receitaCal + receitaGes;
+
+    // Transporte
+    const coletaPorTon = getVal('calcColeta');
+    const entregaPorTon = getVal('calcEntrega');
+    const transpColeta = coletaPorTon * qtdTotal;
+    const transpEntrega = entregaPorTon * qtdTotal;
+    const transpTotal = transpColeta + transpEntrega;
+
+    // Parâmetros
+    const creditoIcmsRecup = parseInt(document.getElementById('calcCreditoIcms').value) === 1;
+    const debitosOutras = getVal('calcDebitosOutras');
+    const despAdmin = getVal('calcDespAdmin');
+    const irpjCsllPct = getVal('calcIrpjCsll') / 100;
+
+    // Alíquotas fixas
+    const ICMS_INTER = 0.12;
+    const BASE_REM = 0.40; // 40% (redução 60%)
+    const ICMS_SAIDA = 0; // isento
+    const PIS_COFINS = 0; // zero
+    const ICMS_TRANSP = 0;
+
+    // Apuração ICMS
+    const baseCheia = custoAqTotal;
+    const baseReduzida = baseCheia * BASE_REM;
+    const creditoEntrada = baseReduzida * ICMS_INTER;
+    const debitoSaida = receitaBruta * ICMS_SAIDA;
+    const debitoTransp = transpTotal * ICMS_TRANSP;
+    const totalDebitos = debitoSaida + debitoTransp + debitosOutras;
+    // NÃO recuperável: crédito perdido (0/0). SIM: compensa com débitos, resto vira saldo credor
+    const creditoCompensado = creditoIcmsRecup ? Math.min(creditoEntrada, totalDebitos) : 0;
+    const creditoReconhecido = creditoIcmsRecup ? creditoCompensado : 0;
+    const saldoCredor = creditoIcmsRecup ? (creditoEntrada - creditoCompensado) : 0;
+
+    // DRE
+    const icmsVendas = debitoSaida;
+    const pisCofins = receitaBruta * PIS_COFINS;
+    const receitaLiquida = receitaBruta - icmsVendas - pisCofins;
+    const compra = -custoAqTotal;
+    const transpColetaNeg = -transpColeta;
+    const cmv = compra + transpColetaNeg + creditoReconhecido;
+    const lucroBruto = receitaLiquida + cmv;
+    const transpEntregaNeg = -transpEntrega;
+    const despAdminNeg = -despAdmin;
+    const lucroAntesIr = lucroBruto + transpEntregaNeg + despAdminNeg;
+    const irpjCsll = -Math.max(0, lucroAntesIr) * irpjCsllPct;
+    const lucroLiquido = lucroAntesIr + irpjCsll;
+
+    // Indicadores
+    const margemLiq = receitaBruta > 0 ? lucroLiquido / receitaBruta : 0;
+    const lucroPorTon = qtdTotal > 0 ? lucroLiquido / qtdTotal : 0;
+    const custoPorTon = qtdTotal > 0 ? (custoAqTotal + transpTotal) / qtdTotal : 0;
+    const precoMedioTon = qtdTotal > 0 ? receitaBruta / qtdTotal : 0;
+    const transpSobreRec = receitaBruta > 0 ? transpTotal / receitaBruta : 0;
+    const precoEquilibrio = custoPorTon;
+
+    // Preencher resumo
+    document.getElementById('calcLucroLiquido').textContent = formatBRL(lucroLiquido);
+    document.getElementById('calcMargem').textContent = (margemLiq * 100).toFixed(2) + '%';
+    document.getElementById('calcPrecoEquilibrio').textContent = formatBRL(precoEquilibrio);
+
+    // Cor do lucro
+    const cardLucro = document.getElementById('cardLucroLiq');
+    cardLucro.classList.remove('positive', 'negative-result');
+    cardLucro.classList.add(lucroLiquido >= 0 ? 'positive' : 'negative-result');
+
+    // Veredicto
+    const box = document.getElementById('calcVerdictBox');
+    const icon = document.getElementById('calcVerdictIcon');
+    const text = document.getElementById('calcVerdictText');
+    box.classList.remove('viable', 'partial', 'inviable');
+    if (lucroLiquido > 0 && margemLiq >= 0.05) {
+        box.classList.add('viable');
+        icon.textContent = '✅';
+        text.textContent = 'Operação LUCRATIVA — Margem líquida de ' + (margemLiq * 100).toFixed(2) + '%.';
+    } else if (lucroLiquido > 0) {
+        box.classList.add('partial');
+        icon.textContent = '⚠️';
+        text.textContent = 'Operação com margem BAIXA (' + (margemLiq * 100).toFixed(2) + '%). Avalie se compensa o risco.';
+    } else {
+        box.classList.add('inviable');
+        icon.textContent = '❌';
+        text.textContent = 'Operação com PREJUÍZO de ' + formatBRL(Math.abs(lucroLiquido)) + '.';
+    }
+
+    // DRE
+    document.getElementById('dreReceitaBruta').textContent = formatBRL(receitaBruta);
+    document.getElementById('dreIcmsVendas').textContent = formatBRL(-icmsVendas);
+    document.getElementById('drePisCofins').textContent = formatBRL(-pisCofins);
+    document.getElementById('dreReceitaLiq').textContent = formatBRL(receitaLiquida);
+    document.getElementById('dreCompra').textContent = formatBRL(compra);
+    document.getElementById('dreColeta').textContent = formatBRL(transpColetaNeg);
+    document.getElementById('dreCredIcms').textContent = formatBRL(creditoReconhecido);
+    document.getElementById('dreCmv').textContent = formatBRL(cmv);
+    document.getElementById('dreLucroBruto').textContent = formatBRL(lucroBruto);
+    document.getElementById('dreEntrega').textContent = formatBRL(transpEntregaNeg);
+    document.getElementById('dreDespAdmin').textContent = formatBRL(despAdminNeg);
+    document.getElementById('dreLucroAntesIr').textContent = formatBRL(lucroAntesIr);
+    document.getElementById('dreIrpjCsll').textContent = formatBRL(irpjCsll);
+    document.getElementById('dreLucroLiquido').textContent = formatBRL(lucroLiquido);
+
+    // Indicadores
+    document.getElementById('indLucroTon').textContent = formatBRL(lucroPorTon);
+    document.getElementById('indCustoTon').textContent = formatBRL(custoPorTon);
+    document.getElementById('indPrecoTon').textContent = formatBRL(precoMedioTon);
+    document.getElementById('indTranspRec').textContent = (transpSobreRec * 100).toFixed(2) + '%';
+    document.getElementById('indCredIcmsNaoConv').textContent = formatBRL(saldoCredor);
+
+    // Resultado por produto (custo total rateado por peso)
+    const custoTonCal = qtdCal > 0 ? precoCompraCal + (transpTotal * (qtdCal / qtdTotal)) / qtdCal : 0;
+    const custoTonGes = qtdGes > 0 ? precoCompraGes + (transpTotal * (qtdGes / qtdTotal)) / qtdGes : 0;
+    const margemTonCal = precoVendaCal - custoTonCal;
+    const margemTonGes = precoVendaGes - custoTonGes;
+    const margemPctCal = precoVendaCal > 0 ? margemTonCal / precoVendaCal : 0;
+    const margemPctGes = precoVendaGes > 0 ? margemTonGes / precoVendaGes : 0;
+    const margemTotalCal = margemTonCal * qtdCal;
+    const margemTotalGes = margemTonGes * qtdGes;
+
+    document.getElementById('prodCustoCal').textContent = formatBRL(custoTonCal);
+    document.getElementById('prodCustoGes').textContent = qtdGes > 0 ? formatBRL(custoTonGes) : '—';
+    document.getElementById('prodVendaCal').textContent = formatBRL(precoVendaCal);
+    document.getElementById('prodVendaGes').textContent = qtdGes > 0 ? formatBRL(precoVendaGes) : '—';
+    document.getElementById('prodMargemCal').textContent = formatBRL(margemTonCal);
+    document.getElementById('prodMargemGes').textContent = qtdGes > 0 ? formatBRL(margemTonGes) : '—';
+    document.getElementById('prodMargemPctCal').textContent = (margemPctCal * 100).toFixed(2) + '%';
+    document.getElementById('prodMargemPctGes').textContent = qtdGes > 0 ? (margemPctGes * 100).toFixed(2) + '%' : '—';
+    document.getElementById('prodMargemTotalCal').textContent = formatBRL(margemTotalCal);
+    document.getElementById('prodMargemTotalGes').textContent = qtdGes > 0 ? formatBRL(margemTotalGes) : '—';
+
+    document.getElementById('resultadoCalcario').classList.remove('hidden');
+    document.getElementById('resultadoCalcario').scrollIntoView({ behavior: 'smooth' });
 }
 
 // Calcular valor da saca

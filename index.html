@@ -163,6 +163,7 @@
             <button class="tab active" onclick="trocarAba('simulacao')">Simulação</button>
             <button class="tab" onclick="trocarAba('comparativo')">Comparativo</button>
             <button class="tab" onclick="trocarAba('saca')">Por Saca</button>
+            <button class="tab" onclick="trocarAba('calcario')">Calcário</button>
             <button class="tab" onclick="trocarAba('cotacao')">Cotação</button>
         </div>
 
@@ -509,6 +510,237 @@
                         <span class="card-label">Custo por Saca (60kg)</span>
                         <span class="card-value" id="sacaCustoSaca">—</span>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SIMULADOR CALCÁRIO -->
+        <section class="panel calc-panel hidden" id="abaCalcario">
+            <h2>Simulador — Revenda de Calcário</h2>
+            <p class="panel-note">Ceará → Piauí · compra na mineradora, frota própria, venda ao produtor</p>
+
+            <div class="route-inputs">
+                <div class="comp-section">
+                    <h3 class="comp-title">01 — Mercadorias</h3>
+                    <table class="calc-table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Calcário</th>
+                                <th>Gesso</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Quantidade (t)</td>
+                                <td><input type="number" id="calcQtdCalcario" value="47" min="0" step="1"></td>
+                                <td><input type="number" id="calcQtdGesso" value="0" min="0" step="1"></td>
+                            </tr>
+                            <tr>
+                                <td>Preço compra na mineradora (R$/t)</td>
+                                <td><input type="number" id="calcPrecoCompraCalcario" value="85" min="0" step="1"></td>
+                                <td><input type="number" id="calcPrecoCompraGesso" value="75" min="0" step="1"></td>
+                            </tr>
+                            <tr>
+                                <td>Preço venda ao produtor (R$/t)</td>
+                                <td><input type="number" id="calcPrecoVendaCalcario" value="250" min="0" step="1"></td>
+                                <td><input type="number" id="calcPrecoVendaGesso" value="250" min="0" step="1"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="comp-section">
+                    <h3 class="comp-title">02 — Transporte Próprio (R$/t)</h3>
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="calcColeta">Coleta CE → PI</label>
+                            <input type="number" id="calcColeta" value="0" min="0" step="1">
+                        </div>
+                        <div class="input-group">
+                            <label for="calcEntrega">Entrega no PI</label>
+                            <input type="number" id="calcEntrega" value="125" min="0" step="1">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="comp-section">
+                    <h3 class="comp-title">03 — Parâmetros</h3>
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="calcCreditoIcms">Crédito ICMS entrada recuperável?</label>
+                            <select id="calcCreditoIcms">
+                                <option value="0">NÃO</option>
+                                <option value="1">SIM</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label for="calcDebitosOutras">Débitos outras saídas tributadas (R$)</label>
+                            <input type="number" id="calcDebitosOutras" value="0" min="0" step="1">
+                        </div>
+                    </div>
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="calcDespAdmin">Despesas administrativas (R$)</label>
+                            <input type="number" id="calcDespAdmin" value="0" min="0" step="1">
+                        </div>
+                        <div class="input-group">
+                            <label for="calcIrpjCsll">IRPJ + CSLL sobre lucro (%)</label>
+                            <input type="number" id="calcIrpjCsll" value="34" min="0" step="0.1">
+                        </div>
+                    </div>
+                </div>
+
+                <button id="btnCalcCalcario" onclick="calcularCalcario()">Calcular Operação</button>
+            </div>
+
+            <!-- Resultado -->
+            <div id="resultadoCalcario" class="resultado hidden">
+                <h3>Resumo da Operação</h3>
+
+                <div class="result-cards">
+                    <div class="result-card highlight-card" id="cardLucroLiq">
+                        <span class="card-label">Lucro Líquido</span>
+                        <span class="card-value" id="calcLucroLiquido">—</span>
+                    </div>
+                    <div class="result-card">
+                        <span class="card-label">Margem Líquida</span>
+                        <span class="card-value" id="calcMargem">—</span>
+                    </div>
+                    <div class="result-card">
+                        <span class="card-label">Preço de Equilíbrio (R$/t)</span>
+                        <span class="card-value" id="calcPrecoEquilibrio">—</span>
+                    </div>
+                </div>
+
+                <div class="verdict-box" id="calcVerdictBox">
+                    <span id="calcVerdictIcon"></span>
+                    <span id="calcVerdictText"></span>
+                </div>
+
+                <div class="reference-box">
+                    <h4>DRE da Operação</h4>
+                    <div class="ref-row">
+                        <span>Receita bruta de vendas</span>
+                        <strong id="dreReceitaBruta">—</strong>
+                    </div>
+                    <div class="ref-row">
+                        <span>(−) ICMS sobre vendas</span>
+                        <strong id="dreIcmsVendas">—</strong>
+                    </div>
+                    <div class="ref-row">
+                        <span>(−) PIS/COFINS</span>
+                        <strong id="drePisCofins">—</strong>
+                    </div>
+                    <div class="ref-row">
+                        <span><strong>Receita líquida</strong></span>
+                        <strong id="dreReceitaLiq">—</strong>
+                    </div>
+                    <div class="ref-row">
+                        <span>(−) Compra na mineradora</span>
+                        <strong id="dreCompra">—</strong>
+                    </div>
+                    <div class="ref-row">
+                        <span>(−) Transporte de coleta</span>
+                        <strong id="dreColeta">—</strong>
+                    </div>
+                    <div class="ref-row">
+                        <span>(+) Crédito de ICMS reconhecido</span>
+                        <strong id="dreCredIcms">—</strong>
+                    </div>
+                    <div class="ref-row">
+                        <span><strong>CMV</strong></span>
+                        <strong id="dreCmv">—</strong>
+                    </div>
+                    <div class="ref-row">
+                        <span><strong>Lucro Bruto</strong></span>
+                        <strong id="dreLucroBruto">—</strong>
+                    </div>
+                    <div class="ref-row">
+                        <span>(−) Transporte de entrega</span>
+                        <strong id="dreEntrega">—</strong>
+                    </div>
+                    <div class="ref-row">
+                        <span>(−) Despesas administrativas</span>
+                        <strong id="dreDespAdmin">—</strong>
+                    </div>
+                    <div class="ref-row">
+                        <span><strong>Lucro antes do IR</strong></span>
+                        <strong id="dreLucroAntesIr">—</strong>
+                    </div>
+                    <div class="ref-row">
+                        <span>(−) IRPJ + CSLL</span>
+                        <strong id="dreIrpjCsll">—</strong>
+                    </div>
+                    <div class="ref-row">
+                        <span><strong>LUCRO LÍQUIDO</strong></span>
+                        <strong id="dreLucroLiquido">—</strong>
+                    </div>
+                </div>
+
+                <div class="reference-box" style="margin-top: 12px;">
+                    <h4>Indicadores</h4>
+                    <div class="ref-row">
+                        <span>Lucro líquido por tonelada</span>
+                        <strong id="indLucroTon">—</strong>
+                    </div>
+                    <div class="ref-row">
+                        <span>Custo total por tonelada</span>
+                        <strong id="indCustoTon">—</strong>
+                    </div>
+                    <div class="ref-row">
+                        <span>Preço médio de venda por tonelada</span>
+                        <strong id="indPrecoTon">—</strong>
+                    </div>
+                    <div class="ref-row">
+                        <span>Transporte sobre a receita</span>
+                        <strong id="indTranspRec">—</strong>
+                    </div>
+                    <div class="ref-row">
+                        <span>Crédito de ICMS ainda não convertido em caixa</span>
+                        <strong id="indCredIcmsNaoConv">—</strong>
+                    </div>
+                </div>
+
+                <div class="reference-box" style="margin-top: 12px;">
+                    <h4>Resultado por Produto</h4>
+                    <table class="calc-table produto-table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Calcário</th>
+                                <th>Gesso</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Custo por tonelada</td>
+                                <td id="prodCustoCal">—</td>
+                                <td id="prodCustoGes">—</td>
+                            </tr>
+                            <tr>
+                                <td>Preço de venda por tonelada</td>
+                                <td id="prodVendaCal">—</td>
+                                <td id="prodVendaGes">—</td>
+                            </tr>
+                            <tr>
+                                <td>Margem por tonelada</td>
+                                <td id="prodMargemCal">—</td>
+                                <td id="prodMargemGes">—</td>
+                            </tr>
+                            <tr>
+                                <td>Margem sobre preço de venda</td>
+                                <td id="prodMargemPctCal">—</td>
+                                <td id="prodMargemPctGes">—</td>
+                            </tr>
+                            <tr>
+                                <td>Margem total do produto</td>
+                                <td id="prodMargemTotalCal">—</td>
+                                <td id="prodMargemTotalGes">—</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p class="calc-note">Margem por produto é antes de IRPJ/CSLL e das despesas administrativas.</p>
                 </div>
             </div>
         </section>
