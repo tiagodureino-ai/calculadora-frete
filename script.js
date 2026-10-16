@@ -63,6 +63,7 @@ function calcular() {
     const km = getVal('km');
     const oferta = getVal('oferta');
     const tons = getVal('toneladas');
+    const pedagio = getVal('pedagio');
 
     if (!km || km <= 0) {
         alert('Informe o KM da rota.');
@@ -94,19 +95,20 @@ function calcular() {
     const impostos = fatBruto * taxaImpostos;
     const fatLiquido = fatBruto - impostos;
     const custoOp = km * subtotalOpKm;
-    const saldo = fatLiquido - custoOp;
+    const saldo = fatLiquido - custoOp - pedagio;
     const deprecRota = km * deprecKm;
     const cobertura = deprecRota !== 0 ? saldo / deprecRota : 0;
 
-    // R$/TON mínimos
-    const minOp = (km * subtotalOpKm) / (tons * (1 - taxaImpostos));
-    const minTotal = (km * (subtotalOpKm + deprecKm)) / (tons * (1 - taxaImpostos));
+    // R$/TON mínimos (consideram pedágio)
+    const minOp = (km * subtotalOpKm + pedagio) / (tons * (1 - taxaImpostos));
+    const minTotal = (km * (subtotalOpKm + deprecKm) + pedagio) / (tons * (1 - taxaImpostos));
 
     // Preencher resultados
     document.getElementById('resFatBruto').textContent = formatBRL(fatBruto);
     document.getElementById('resImpostos').textContent = '- ' + formatBRL(impostos);
     document.getElementById('resFatLiquido').textContent = formatBRL(fatLiquido);
     document.getElementById('resCustoOp').textContent = '- ' + formatBRL(custoOp);
+    document.getElementById('resPedagio').textContent = pedagio > 0 ? '- ' + formatBRL(pedagio) : formatBRL(0);
     document.getElementById('resSaldo').textContent = formatBRL(saldo);
     document.getElementById('resCobertura').textContent = (cobertura * 100).toFixed(1) + '%';
 

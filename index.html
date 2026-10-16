@@ -186,6 +186,12 @@
                         <input type="number" id="toneladas" value="48" step="1" min="1">
                     </div>
                 </div>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="pedagio">Pedágio da Rota (R$)</label>
+                        <input type="number" id="pedagio" placeholder="0.00" min="0" step="0.01" value="0">
+                    </div>
+                </div>
                 <div class="checkbox-row">
                     <label class="toggle-label">
                         <input type="checkbox" id="exportacao">
@@ -224,8 +230,12 @@
                         <span class="card-label">Custo Operacional</span>
                         <span class="card-value negative" id="resCustoOp">—</span>
                     </div>
+                    <div class="result-card" id="cardPedagio">
+                        <span class="card-label">Pedágio</span>
+                        <span class="card-value negative" id="resPedagio">—</span>
+                    </div>
                     <div class="result-card highlight-card" id="cardSaldo">
-                        <span class="card-label">Saldo (Líq. - Custo Op.)</span>
+                        <span class="card-label">Saldo (Líq. - Custo - Pedágio)</span>
                         <span class="card-value" id="resSaldo">—</span>
                     </div>
                     <div class="result-card" id="cardCobertura">
